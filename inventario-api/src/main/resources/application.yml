@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: inventario-api
+  profiles:
+    default: dev
+  config:
+    import: optional:file:../.env[.properties]
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+app:
+  cors:
+    origen: http://localhost:4200
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:inventario
+  h2:
+    console:
+      enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+app:
+  cors:
+    origen: ${FRONT_URL}
